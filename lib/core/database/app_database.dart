@@ -14,9 +14,11 @@ part 'app_database.g.dart';
 )
 abstract class AppDatabase extends FloorDatabase {
   EmployeeDao get employeesDao;
+  
+  static late AppDatabase instance;
 
-  static Future<AppDatabase> create(String name) {
-    return $FloorAppDatabase.databaseBuilder(name).addCallback(
+  static Future<AppDatabase> init(String name) async {
+    instance = await $FloorAppDatabase.databaseBuilder(name).addCallback(
       Callback(
         onCreate: (database, version) async {
           // This method is only called when the database is first created.
@@ -24,6 +26,7 @@ abstract class AppDatabase extends FloorDatabase {
         },
       ),
     ).build();
+    return instance;
   }
 
   static Future<void> _prepopulateDb(sqflite.DatabaseExecutor database) async {

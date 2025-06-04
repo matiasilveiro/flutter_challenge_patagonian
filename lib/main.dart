@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:patagonian_employees_app/core/core.dart';
 
 import 'core/core.dart';
-
-late AppDatabase database;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Bootstrap the application by initializing the database
-  database = await AppDatabase.create('app_database.db');
+  // Bootstrap the application by initializing the dependencies
+  await configureDependencies();
 
   runApp(const MainApp());
 }
