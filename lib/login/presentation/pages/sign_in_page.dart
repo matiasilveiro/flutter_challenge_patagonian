@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:patagonian_employees_app/core/core.dart';
-import 'package:patagonian_employees_app/core/widgets/loading_overlay.dart';
-import 'package:patagonian_employees_app/employees/presentation/routes.dart';
+import 'package:patagonian_employees_app/employee/presentation/routes.dart';
 import 'package:patagonian_employees_app/login/presentation/presentation.dart';
 
 class SignInPage extends StatefulWidget {
@@ -42,96 +41,97 @@ class _SignInPageState extends State<SignInPage> {
           return LoadingScreen(
             isLoading: state.isLoading,
             child: Scaffold(
-              body: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const FlutterLogo(
-                        size: 200,
-                        style: FlutterLogoStyle.stacked,
-                      ),
-                      TextFormField(
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Email',
-                          hintText: 'Enter valid email as abc@gmail.com',
+              body: SafeArea(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const FlutterLogo(
+                          size: 200,
+                          style: FlutterLogoStyle.stacked,
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 30),
-                      TextFormField(
-                        controller: passwordController,
-                        obscureText: !isPasswordVisible,
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'Password',
-                          hintText: 'Enter your secure password',
-                          suffixIcon: IconButton(
-                            onPressed: _togglePasswordVisibility,
-                            icon: Icon(
-                              isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                        TextFormField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Email',
+                            hintText: 'Enter valid email as abc@gmail.com',
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 30),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: !isPasswordVisible,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText: 'Password',
+                            hintText: 'Enter your secure password',
+                            suffixIcon: IconButton(
+                              onPressed: _togglePasswordVisibility,
+                              icon: Icon(
+                                isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextButton(
+                          onPressed: _onUnimplementedFeature,
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 15,
                             ),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextButton(
-                        onPressed: _onUnimplementedFeature,
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(
+                        TextButton(
+                          onPressed: _onUnimplementedFeature,
+                          child: Text(
+                            'Don\'t have an account? Sign up',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          height: 50,
+                          width: 250,
+                          decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.primary,
-                            fontSize: 15,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: TextButton(
+                            onPressed: _onLoginButtonPressed,
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(color: Colors.white, fontSize: 25),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextButton(
-                        onPressed: _onUnimplementedFeature,
-                        child: Text(
-                          'Don\'t have an account? Sign up',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        height: 50,
-                        width: 250,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: TextButton(
-                          onPressed: _onLoginButtonPressed,
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(color: Colors.white, fontSize: 25),
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

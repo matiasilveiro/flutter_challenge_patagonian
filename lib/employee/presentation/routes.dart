@@ -1,5 +1,5 @@
 class EmployeesRoutes {
   const EmployeesRoutes._();
 
-  static const String home = '/employees';
+  static const String home = '/employee';
 }

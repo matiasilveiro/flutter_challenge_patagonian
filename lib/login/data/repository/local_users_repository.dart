@@ -21,14 +21,20 @@ class LocalUsersRepositoryImpl implements UsersRepository {
     String email,
     String password,
   ) {
-    return Future.delayed(const Duration(seconds: 1), () {
-      return _employeeDao.findByEmailAndPassword(email, password).then(
-            (employeeDto) => employeeDto != null
-                ? Right(employeeDto.toUser())
-                : Left(
-                    UserNotFoundException('User with email $email not found'),
-                  ),
+    return Future.delayed(const Duration(seconds: 1), () async {
+      try {
+        final employeeDto =
+            await _employeeDao.findByEmailAndPassword(email, password);
+        if (employeeDto == null) {
+          return Left(
+            UserNotFoundException(
+                'User with email $email not found or invalid credentials'),
           );
+        }
+        return Right(employeeDto.toUser());
+      } catch (e) {
+        return Left(Exception('Failed to fetch user'));
+      }
     });
   }
 

@@ -6,8 +6,9 @@ import 'package:patagonian_employees_app/login/domain/domain.dart';
 @injectable
 class SignInUseCase {
   final UsersRepository _repository;
+  final PreferencesManager _preferencesManager;
 
-  SignInUseCase(this._repository);
+  SignInUseCase(this._repository, this._preferencesManager);
 
   Future<Either<Exception, User>> call(String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
@@ -16,6 +17,16 @@ class SignInUseCase {
       );
     }
 
-    return _repository.getUserByEmailAndPassword(email, password);
+    return _repository.getUserByEmailAndPassword(email, password).then(
+      (result) async {
+        return result.fold(
+          (exception) => Left(exception),
+          (user) async {
+            await _preferencesManager.setUserId(user.id.toString());
+            return Right(user);
+          },
+        );
+      },
+    );
   }
 }

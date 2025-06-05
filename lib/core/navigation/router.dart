@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:patagonian_employees_app/employees/presentation/presentation.dart';
-import 'package:patagonian_employees_app/employees/presentation/routes.dart';
+import 'package:patagonian_employees_app/employee/presentation/presentation.dart';
+import 'package:patagonian_employees_app/employee/presentation/routes.dart';
 import 'package:patagonian_employees_app/login/presentation/presentation.dart';
 import 'package:patagonian_employees_app/login/presentation/routes.dart';
 
